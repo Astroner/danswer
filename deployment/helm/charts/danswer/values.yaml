@@ -411,6 +411,7 @@ configMap:
   SMTP_SERVER: ""  # For sending verification emails, if unspecified then defaults to 'smtp.gmail.com'
   SMTP_PORT: ""  # For sending verification emails, if unspecified then defaults to '587'
   SMTP_USER: ""  # 'your-email@company.com'
+  INGESTION_API_KEY: ""
   # SMTP_PASS: ""  # 'your-gmail-password'
   EMAIL_FROM: ""  # 'your-email@company.com' SMTP_USER missing used instead
   # Gen AI Settings
