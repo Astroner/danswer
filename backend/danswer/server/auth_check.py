@@ -10,6 +10,7 @@ from danswer.auth.users import current_user
 from danswer.auth.users import current_user_with_expired_token
 from danswer.configs.app_configs import APP_API_PREFIX
 from danswer.server.danswer_api.ingestion import api_key_dep
+from danswer.server.danswer_api.ingestion import api_key_or_env_token
 
 
 PUBLIC_ENDPOINT_SPECS = [
@@ -98,6 +99,7 @@ def check_router_auth(
                     or depends_fn == current_curator_or_admin_user
                     or depends_fn == api_key_dep
                     or depends_fn == current_user_with_expired_token
+                    or depends_fn == api_key_or_env_token
                 ):
                     found_auth = True
                     break

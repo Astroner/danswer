@@ -59,6 +59,8 @@ DEV_LOGGING_ENABLED = os.environ.get("DEV_LOGGING_ENABLED", "").lower() == "true
 # notset, debug, info, notice, warning, error, or critical
 LOG_LEVEL = os.environ.get("LOG_LEVEL", "notice")
 
+# API key for ingestion API
+INGESTION_API_KEY = os.environ.get("INGESTION_API_KEY")
 
 # Fields which should only be set on new search setting
 PRESERVED_SEARCH_FIELDS = [
