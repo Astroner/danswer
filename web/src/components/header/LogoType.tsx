@@ -66,7 +66,7 @@ export default function LogoType({
               )}
             </div>
           ) : (
-            <HeaderTitle>Danswer</HeaderTitle>
+            <HeaderTitle>Neolaw</HeaderTitle>
           )}
         </div>
       </div>
