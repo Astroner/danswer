@@ -12,7 +12,7 @@ import {
 import { SettingsProvider } from "@/components/settings/SettingsProvider";
 import { Metadata } from "next";
 import { buildClientUrl, fetchSS } from "@/lib/utilsSS";
-import { Inter } from "next/font/google";
+import { Inter, Plus_Jakarta_Sans } from "next/font/google";
 import Head from "next/head";
 import { EnterpriseSettings } from "./admin/settings/interfaces";
 import { Card } from "@tremor/react";
@@ -26,6 +26,12 @@ const inter = Inter({
   variable: "--font-inter",
   display: "swap",
 });
+
+const plusJSans = Plus_Jakarta_Sans({
+  subsets: ['latin'],
+  variable: "--font-header",
+  display: "swap",
+})
 
 export async function generateMetadata(): Promise<Metadata> {
   let logoLocation = buildClientUrl("/danswer.ico");
@@ -131,7 +137,7 @@ export default async function RootLayout({
         </head>
       )}
 
-      <body className={`relative ${inter.variable} font-sans`}>
+      <body className={`relative ${inter.variable} ${plusJSans.variable} font-sans`}>
         <div
           className={`text-default min-h-screen bg-background ${
             // TODO: remove this once proper dark mode exists

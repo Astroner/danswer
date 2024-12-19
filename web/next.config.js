@@ -11,6 +11,14 @@ const nextConfig = {
   publicRuntimeConfig: {
     version,
   },
+  rewrites: () => ({
+    beforeFiles: [
+      {
+        source: '/',
+        destination: '/yoloco',
+      },
+    ]
+  })
 };
 
 module.exports = nextConfig;
