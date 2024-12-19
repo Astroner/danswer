@@ -7,21 +7,13 @@ import { LLM_PROVIDERS_ADMIN_URL } from "./constants";
 import {
   SelectorFormField,
   TextFormField,
-  BooleanFormField,
   MultiSelectField,
 } from "@/components/admin/connectors/Field";
 import { useState } from "react";
-import { Bubble } from "@/components/Bubble";
-import { GroupsIcon } from "@/components/icons/icons";
 import { useSWRConfig } from "swr";
-import {
-  defaultModelsByProvider,
-  getDisplayNameForModel,
-  useUserGroups,
-} from "@/lib/hooks";
+import { defaultModelsByProvider, getDisplayNameForModel } from "@/lib/hooks";
 import { FullLLMProvider, WellKnownLLMProviderDescriptor } from "./interfaces";
 import { PopupSpec } from "@/components/admin/connectors/Popup";
-import { usePaidEnterpriseFeaturesEnabled } from "@/components/settings/usePaidEnterpriseFeaturesEnabled";
 import * as Yup from "yup";
 import isEqual from "lodash/isEqual";
 import { IsPublicGroupSelector } from "@/components/IsPublicGroupSelector";
@@ -42,11 +34,6 @@ export function LLMProviderUpdateForm({
   setPopup?: (popup: PopupSpec) => void;
 }) {
   const { mutate } = useSWRConfig();
-
-  const isPaidEnterpriseFeaturesEnabled = usePaidEnterpriseFeaturesEnabled();
-
-  // EE only
-  const { data: userGroups, isLoading: userGroupsIsLoading } = useUserGroups();
 
   const [isTesting, setIsTesting] = useState(false);
   const [testError, setTestError] = useState<string>("");
@@ -150,18 +137,21 @@ export function LLMProviderUpdateForm({
           }
         }
 
-        const response = await fetch(LLM_PROVIDERS_ADMIN_URL, {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            provider: llmProviderDescriptor.name,
-            ...values,
-            fast_default_model_name:
-              values.fast_default_model_name || values.default_model_name,
-          }),
-        });
+        const response = await fetch(
+          `${LLM_PROVIDERS_ADMIN_URL}${existingLlmProvider ? "" : "?is_creation=true"}`,
+          {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              provider: llmProviderDescriptor.name,
+              ...values,
+              fast_default_model_name:
+                values.fast_default_model_name || values.default_model_name,
+            }),
+          }
+        );
 
         if (!response.ok) {
           const errorMsg = (await response.json()).detail;
@@ -275,7 +265,7 @@ export function LLMProviderUpdateForm({
             </div>
           ))}
 
-          {!hideAdvanced && (
+          {!(hideAdvanced && llmProviderDescriptor.name != "azure") && (
             <>
               <Divider />
 

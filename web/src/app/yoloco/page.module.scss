@@ -1,0 +1,185 @@
+.root {
+    position: relative;
+
+    width: 100vw;
+    height: 100vh;
+
+    background-color: #EEF2F2;
+
+    padding: 30px 40px;
+
+    display: grid;
+    grid-template-columns: 30fr 70fr;
+    gap: 40px;
+}
+
+.header {
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    width: 100%;
+
+    display: flex;
+    justify-content: flex-end;
+
+    padding: 30px 40px;
+
+    // TODO: remove all of this crap after normal UI rebuild
+    & div {
+        background-color: transparent;
+        color: #7E8586;
+        font-size: 14px;
+    }
+    &> div > div > div, button {
+        width: 40px;
+        height: 40px;
+
+        border-radius: 50%;
+
+        background-color: #fff;
+
+        color: #7E8586;
+        font-size: 14px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+}
+
+.welcome {
+    height: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &__container {
+        position: relative;
+
+        h1 {
+            font-family: var(--font-header);
+            font-size: 46px;
+            font-weight: 600;
+            color: #222222;
+        }
+
+        p {
+            font-size: 16px;
+            color: #7E8586;
+
+            margin-top: 20px;
+        }
+    }
+}
+
+.logo {
+    position: absolute;
+
+    left: 0;
+    bottom: calc(100% + 40px);
+}
+
+.cards {
+    height: 100%;
+
+    display: flex;
+    align-items: center;
+
+    &__container {
+        width: 100%;
+    }
+}
+
+.row {
+    display: flex;
+
+    &:not(:first-child) {
+        margin-top: 20px;
+    }
+}
+
+.card {
+    background-color: #fff;
+
+    border-radius: 30px;
+
+    padding: 30px;
+
+    color: #222222;
+
+    cursor: pointer;
+
+    transition: box-shadow .3s, transform .3s;
+
+    display: flex;
+    flex-direction: column;
+
+    &:not(:first-child) {
+        margin-left: 20px;
+    }
+
+    &:hover {
+        box-shadow: 0 10px 20px 0px rgba(0,0,0,0.2);
+        transform: translateY(-10px);
+    }
+
+    h2 {
+        font-family: var(--font-header);
+        font-size: 34px;
+        font-weight: 600;
+    }
+
+    p {
+        font-size: 14px;
+
+        margin-top: 20px;
+    }
+
+    &__text {
+        flex-grow: 1;
+    }
+}
+
+.icon {
+    margin-top: 40px;
+
+    width: 60px;
+    height: 60px;
+
+    border-radius: 50%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    img {
+        width: 30px;
+        height: 30px;
+    }
+}
+
+.footer {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+
+    width: 100%;
+
+    display: flex;
+    justify-content: flex-end;
+
+    padding: 30px 40px;
+
+    &__placeholder {
+        font-size: 14px;
+        color: #7E8586;
+
+        cursor: pointer;
+
+        &:not(:first-child) {
+            margin-left: 50px;
+        }
+    }
+}
