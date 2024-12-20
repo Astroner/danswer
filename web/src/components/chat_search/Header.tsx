@@ -64,7 +64,7 @@ export default function FunctionalHeader({
     router.push(newChatUrl);
   };
   return (
-    <div className="left-0 bg-transparent sticky top-0 z-20 w-full relative flex">
+    <div className="left-0 bg-transparent sticky top-0 z-20 w-full relative flex" style={{ background: 'none' }}>
       <div className="mt-2 mx-2.5 cursor-pointer text-text-700 relative flex w-full">
         <LogoType
           assistantId={currentChatSession?.persona_id}
@@ -128,9 +128,9 @@ export default function FunctionalHeader({
         </div>
       </div>
 
-      {page != "assistants" && (
+      {/* {page != "assistants" && (
         <div className="h-20 left-0 absolute top-0 z-10 w-full bg-gradient-to-b via-50% z-[-1] from-background via-background to-background/10 flex" />
-      )}
+      )} */}
     </div>
   );
 }

@@ -5,14 +5,55 @@ import { Divider } from "@tremor/react";
 import { FiBookmark, FiInfo } from "react-icons/fi";
 import { HoverPopup } from "@/components/HoverPopup";
 
+import cn from "./ChatIntro.module.scss";
+
+import brainPNG from "./icons/brain.png";
+import Image from "next/image";
+import { useRouter, useSearchParams } from "next/navigation";
+import { buildChatUrl } from "./lib";
+
 export function ChatIntro({
   availableSources,
   selectedPersona,
+  availablePersonas,
 }: {
   availableSources: ValidSources[];
   selectedPersona: Persona;
+  availablePersonas: Persona[]
 }) {
+  const router = useRouter();
+  const searchParams = useSearchParams()
+
   const availableSourceMetadata = getSourceMetadataForSources(availableSources);
+
+  const select = (assistant: Persona) => {
+    if (assistant.id !== selectedPersona.id) {
+      
+      router.push(buildChatUrl(searchParams, null, assistant.id));
+    }
+  }
+
+  return (
+    <div className={cn.header}>
+      <div className={cn.logo}>
+            <Image src={brainPNG} alt="" />
+          </div>
+          <h1>
+            Which assistant do you want to chat with today?
+          </h1>
+          <p>
+            Or ask a question immediately to use Neolaw assistant.
+          </p>
+          <div className={cn.assistants}>
+            {availablePersonas.map(persona => (
+              <div key={persona.id} className={selectedPersona.id === persona.id ? cn['assistant--selected'] : cn['assistant--default']} onClick={() => select(persona)}>
+                <h3>{persona.name}</h3>
+                <p>{persona.description}</p>
+              </div>
+            ))}
+        </div>
+    </div>
+  )
 
   return (
     <>
@@ -24,11 +65,12 @@ export function ChatIntro({
                 {selectedPersona?.name || "How can I help you today?"}
               </div>
               {selectedPersona && (
-                <div className="mt-1">{selectedPersona.description}</div>
+                <div className="mt-1">
+                {selectedPersona.description}
+                </div>
               )}
             </div>
           </div>
-
           {selectedPersona && selectedPersona.num_chunks !== 0 && (
             <>
               <Divider />

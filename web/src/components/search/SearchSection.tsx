@@ -41,6 +41,11 @@ import { useSearchContext } from "../context/SearchContext";
 import { useUser } from "../user/UserProvider";
 import UnconfiguredProviderText from "../chat_search/UnconfiguredProviderText";
 
+import icon from "./icons/searchIcon.png";
+import Image from "next/image";
+
+import cn from "./SearchSection.module.scss";
+
 export type searchState =
   | "input"
   | "searching"
@@ -591,7 +596,7 @@ export const SearchSection = ({
 
   return (
     <>
-      <div className="flex relative pr-[8px] h-full text-default">
+      <div className="flex relative pr-[8px] h-full text-default" style={{ background: "white" }}>
         {popup}
 
         {!shouldDisplayNoSources &&
@@ -748,8 +753,16 @@ export const SearchSection = ({
                       <div className="mt-48 mb-8 flex justify-center items-center">
                         <div className="w-message-xs 2xl:w-message-sm 3xl:w-message">
                           <div className="flex">
-                            <div className="text-3xl font-bold font-strong text-strong mx-auto">
-                              Unlock Knowledge
+                            <div className={"text-3xl font-bold font-strong text-strong mx-auto " + cn.header}>
+                              <div className={cn.icon}>
+                                <Image src={icon} alt=""  />
+                              </div>
+                              <h1>
+                                Use keyword search
+                              </h1>
+                              <p>
+                                Or ask a question immediately to use the Neolaw assistant.
+                              </p>
                             </div>
                           </div>
                         </div>

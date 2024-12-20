@@ -1856,7 +1856,7 @@ export function ChatPage({
         />
       )}
 
-      <div className="fixed inset-0 flex flex-col text-default">
+      <div className="fixed inset-0 flex flex-col text-default" style={{ background: 'white' }}>
         <div className="h-[100dvh] overflow-y-hidden">
           <div className="w-full">
             <div
@@ -1965,6 +1965,7 @@ export function ChatPage({
                               <ChatIntro
                                 availableSources={finalAvailableSources}
                                 selectedPersona={liveAssistant}
+                                availablePersonas={finalAssistants}
                               />
                             )}
                           <div

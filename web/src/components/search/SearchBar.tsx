@@ -134,14 +134,13 @@ export const FullSearchBar = ({
         h-fit
         flex
         flex-col
-        border
-        border-border-medium
         rounded-lg
         bg-background-chatbar
         [&:has(textarea:focus)]::ring-1
         [&:has(textarea:focus)]::ring-black
         text-text-chatbar
         "
+      style={{ borderRadius: 16 }}
     >
       <textarea
         rows={3}
@@ -168,10 +167,10 @@ export const FullSearchBar = ({
           placeholder:text-text-chatbar-subtle
         `}
         autoFocus
-        style={{ scrollbarWidth: "thin" }}
+        style={{ scrollbarWidth: "thin", background: "#F5F8F8", borderRadius: 16 }}
         role="textarea"
         aria-multiline
-        placeholder="Search for anything..."
+        placeholder="Search..."
         value={query}
         onChange={handleChange}
         onKeyDown={(event) => {}}
