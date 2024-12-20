@@ -1,9 +1,11 @@
 from fastapi import APIRouter
 from fastapi import Depends
 from fastapi import HTTPException
+from fastapi import Request
 from sqlalchemy.orm import Session
 
 from danswer.configs.constants import DocumentSource
+from shared_configs.configs import INGESTION_API_KEY
 from danswer.connectors.models import Document
 from danswer.connectors.models import IndexAttemptMetadata
 from danswer.db.connector_credential_pair import get_connector_credential_pair_from_id
@@ -28,11 +30,31 @@ logger = setup_logger()
 # not using /api to avoid confusion with nginx api path routing
 router = APIRouter(prefix="/danswer-api")
 
+AUTH_HEADER = "Authorization"
+BEARER_PREFIX = "Bearer "
+
+def api_key_or_env_token(
+    request: Request,
+    db_session = Depends(get_session)
+):
+    try:
+        return api_key_dep(request, db_session)
+    except Exception as e:
+        header = request.headers.get(AUTH_HEADER)
+        if header == None or not header.startswith(BEARER_PREFIX):
+            raise e
+        
+        token = header[len(BEARER_PREFIX):].strip()
+
+        if token != INGESTION_API_KEY:
+            raise e;
+
+        return None
 
 @router.get("/connector-docs/{cc_pair_id}")
 def get_docs_by_connector_credential_pair(
     cc_pair_id: int,
-    _: User | None = Depends(api_key_dep),
+    _: User | None = Depends(api_key_or_env_token),
     db_session: Session = Depends(get_session),
 ) -> list[DocMinimalInfo]:
     db_docs = get_documents_by_cc_pair(cc_pair_id=cc_pair_id, db_session=db_session)
@@ -45,10 +67,9 @@ def get_docs_by_connector_credential_pair(
         for doc in db_docs
     ]
 
-
 @router.get("/ingestion")
 def get_ingestion_docs(
-    _: User | None = Depends(api_key_dep),
+    _: User | None = Depends(api_key_or_env_token),
     db_session: Session = Depends(get_session),
 ) -> list[DocMinimalInfo]:
     db_docs = get_ingestion_documents(db_session)
@@ -65,7 +86,7 @@ def get_ingestion_docs(
 @router.post("/ingestion")
 def upsert_ingestion_doc(
     doc_info: IngestionDocument,
-    _: User | None = Depends(api_key_dep),
+    _: User | None = Depends(api_key_or_env_token),
     db_session: Session = Depends(get_session),
 ) -> IngestionResult:
     doc_info.document.from_ingestion_api = True
