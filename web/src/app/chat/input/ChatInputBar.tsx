@@ -381,14 +381,13 @@ export function ChatInputBar({
               bg-bl
               flex
               flex-col
-              border
-              border-[#E5E7EB]
               rounded-lg
               text-text-chatbar
               bg-background-chatbar
               [&:has(textarea:focus)]::ring-1
               [&:has(textarea:focus)]::ring-black
             "
+            style={{ borderRadius: 16 }}
           >
             {alternativeAssistant && (
               <div className="flex flex-wrap gap-y-1 gap-x-2 px-2 pt-1.5 w-full">
@@ -499,12 +498,13 @@ export function ChatInputBar({
                 h-14
               `}
               autoFocus
-              style={{ scrollbarWidth: "thin" }}
+              style={{ scrollbarWidth: "thin", background: "#F5F8F8", borderRadius: 16, fontSize: 16 }}
               role="textarea"
               aria-multiline
-              placeholder={`Send a message ${
-                !settings?.isMobile ? "or try using @ or /" : ""
-              }`}
+              // placeholder={`Send a message ${
+              //   !settings?.isMobile ? "or try using @ or /" : ""
+              // }`}
+              placeholder="Ask me a question"
               value={message}
               onKeyDown={(event) => {
                 if (
@@ -522,7 +522,7 @@ export function ChatInputBar({
               }}
               suppressContentEditableWarning={true}
             />
-            <div className="flex items-center space-x-3 mr-12 px-4 pb-2">
+            {/* <div className="flex items-center space-x-3 mr-12 px-4 pb-2">
               <Popup
                 removePadding
                 content={(close) => (
@@ -643,7 +643,7 @@ export function ChatInputBar({
                   />
                 </button>
               )}
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

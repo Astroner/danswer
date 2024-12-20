@@ -121,7 +121,19 @@ export function UserDropdown({
                 flex-none
                 px-2
                 text-base
+                flex
+                justify-center
+                items-center
               "
+              style={{
+                width: 40,
+                height: 40,
+                borderRadius: '50%',
+                backgroundColor: "#EEF2F2",
+                fontSize: 14,
+                color: "#7E8586",
+                fontWeight: 600
+              }}
             >
               {user && user.email ? user.email[0].toUpperCase() : "A"}
             </div>

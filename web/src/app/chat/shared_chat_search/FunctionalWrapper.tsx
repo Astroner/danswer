@@ -1,10 +1,13 @@
 "use client";
 
-import React, { ReactNode, useContext, useEffect, useState } from "react";
+import React, { ReactNode, useContext, useEffect, useMemo, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { ChatIcon, SearchIcon } from "@/components/icons/icons";
 import { SettingsContext } from "@/components/settings/SettingsProvider";
 import KeyboardSymbol from "@/lib/browserUtilities";
+
+import cn from "./FunctionalWrapper.module.scss";
+import Link from "next/link";
 
 const ToggleSwitch = () => {
   const commandSymbol = KeyboardSymbol();
@@ -97,6 +100,15 @@ export default function FunctionalWrapper({
   initiallyToggled: boolean;
 }) {
   const router = useRouter();
+  const pathname = usePathname();
+
+  const breadCrumb = useMemo(() => {
+    if(pathname === "/chat") {
+      return "Legal brain"
+    } else {
+      return "Cases AI"
+    }
+  }, [pathname])
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -147,16 +159,26 @@ export default function FunctionalWrapper({
     <>
       {(!settings ||
         (settings.search_page_enabled && settings.chat_page_enabled)) && (
-        <div
-          className={`mobile:hidden z-30 flex fixed ${chatBannerPresent ? (twoLines ? "top-20" : "top-14") : "top-4"} left-1/2 transform -translate-x-1/2`}
-        >
+          <div
+            className={`mobile:hidden z-30 flex fixed ${chatBannerPresent ? (twoLines ? "top-20" : "top-14") : "top-4"} left-1/2 transform -translate-x-1/2`}
+            style={{ left: 370 }}
+          >
           <div
             style={{ transition: "width 0.30s ease-out" }}
             className={`flex-none overflow-y-hidden bg-background-100 transition-all bg-opacity-80 duration-300 ease-in-out h-full
-                        ${toggledSidebar ? "w-[250px] " : "w-[0px]"}`}
-          />
+              ${toggledSidebar ? "w-[250px] " : "w-[0px]"}`}
+              />
+            <div className={cn.breadcrumbs}>
+              <Link href={"/"} className={cn.dashboard}>Dashboard</Link>
+              <div style={{ fontSize: 14, color: "#7E8586", margin: '0 11px' }}>
+                /
+              </div>
+              <div style={{ color: "#358793", fontSize: 14, fontWeight: 600 }}>
+                {breadCrumb}
+              </div>
+            </div>
           <div className="relative">
-            <ToggleSwitch />
+            {/* <ToggleSwitch /> */}
           </div>
         </div>
       )}
